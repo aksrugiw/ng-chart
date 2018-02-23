@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from './../data.service';
 import { Chart } from 'chart.js';
 
+import { OrderByPipe } from './../order-by.pipe';
+
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -18,6 +20,8 @@ export class PanelComponent implements OnInit {
   };
   isDetails = false;
   detailsInfo = '';
+  sortKey = '';
+  sortAsc = true;
 
   constructor(private _dataService: DataService) {}
 
@@ -100,6 +104,11 @@ export class PanelComponent implements OnInit {
   backFromDetails() {
     this.isDetails = false;
     this.tableData = this.responseData;
+  }
+
+  sortTable(sortBy) {
+    this.sortKey = sortBy;
+    this.sortAsc = !this.sortAsc;
   }
 
 }

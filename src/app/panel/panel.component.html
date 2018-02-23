@@ -10,13 +10,13 @@
         <table class="table">
           <thead>
             <tr>
-              <th>name</th>
-              <th>value</th>
-              <th>pvalue</th>
+              <th (click)="sortTable('name')">name</th>
+              <th (click)="sortTable('value')">value</th>
+              <th (click)="sortTable('pvalue')">pvalue</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of tableData">
+            <tr *ngFor="let item of tableData | orderBy:sortKey:sortAsc">
               <td>{{ item.name }}</td>
               <td>{{ item.value }}</td>
               <td>{{ item.pvalue }}</td>

@@ -5,12 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { DataService } from './data.service';
 import { PanelComponent } from './panel/panel.component';
+import { OrderByPipe } from './order-by.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    PanelComponent
+    PanelComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,
