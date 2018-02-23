@@ -1,21 +1,28 @@
-<div style="width: 40%; display:inline-block">
-  <canvas id="{{canvasId}}">{{ chart }}</canvas>
-</div>
-<div style="width: 30%; display:inline-block">
-  <table>
-    <thead>
-      <tr>
-        <th>name</th>
-        <th>value</th>
-        <th>pvalue</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of tableData">
-        <td>{{ item.name }}</td>
-        <td>{{ item.value }}</td>
-        <td>{{ item.pvalue }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-xs-12">
+        <canvas id="{{ canvasId }}">{{ chart }}</canvas>
+        <button class="btn btn-primary" (click)="reloadData()">Reload data</button>
+      </div>
+      <div class="col-sm-6 col-xs-12">
+        <p *ngIf="isDetails">Details from: {{ detailsInfo }}</p>
+        <button class="btn btn-sm btn-info" *ngIf="isDetails" (click)="backFromDetails()">back</button>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>name</th>
+              <th>value</th>
+              <th>pvalue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tableData">
+              <td>{{ item.name }}</td>
+              <td>{{ item.value }}</td>
+              <td>{{ item.pvalue }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

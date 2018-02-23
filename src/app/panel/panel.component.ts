@@ -8,27 +8,38 @@ import { Chart } from 'chart.js';
   styleUrls: ['./panel.component.css']
 })
 export class PanelComponent implements OnInit {
-  @Input() canvasId: string;
-  chart;
+  @Input() canvasId: string = 'canvas';
+  chart: Chart;
   responseData = [];
   tableData = [];
   data = {
     values: [],
     names: []
   };
+  isDetails = false;
+  detailsInfo = '';
 
   constructor(private _dataService: DataService) {}
 
   ngOnInit() {
-    let data = [];
-    
-    this._dataService.fetchData()
-      .subscribe(response => {
-        this.responseData = Object.keys(response).map((k) => response[k]);
-        this.tableData = this.responseData;
-        this.prepareData(this.responseData);
-        this.drawChart(this.data);
-      });
+     this.fetchDataFromServer();
+     this.tableData = this.responseData;
+     this.prepareData(this.responseData);
+     this.drawChart();
+  }
+
+  fetchDataFromServer() {
+    this._dataService.fetchMockData()
+    .subscribe(response => {
+      this.responseData = Object.keys(response).map((k) => response[k]);
+    });  
+  }
+
+  reloadData() {
+    this.fetchDataFromServer();
+    this.tableData = this.responseData;
+    this.prepareData(this.responseData);
+    this.drawChart();
   }
 
   prepareData(data) {
@@ -38,7 +49,7 @@ export class PanelComponent implements OnInit {
     }
   }
 
-  drawChart(data) {
+  drawChart() {
     let preparedData = {
       datasets: [
         { 
@@ -71,19 +82,24 @@ export class PanelComponent implements OnInit {
       ],
       labels: this.data.names
     };
-    this.chart = new Chart(this.canvasId, {
+    let ctx = document.getElementById(this.canvasId);
+    this.chart = new Chart(ctx, {
         type: 'doughnut',
         data: preparedData,
         options: {
           onClick: (e) => {
             var activePoints = this.chart.getElementsAtEvent(e);
-            // var label = this.chart.data.labels[activePoints[0]._index];
-            // var value = this.chart.data.datasets[activePoints[0]._datasetIndex].data[activePoints[0]._index];
-            // console.log(activePoints[0]._index);
+            this.detailsInfo = this.chart.data.labels[activePoints[0]._index];
             this.tableData = this.responseData[activePoints[0]._index].data;
+            this.isDetails = true;
             }
           }
     });
+  }
+
+  backFromDetails() {
+    this.isDetails = false;
+    this.tableData = this.responseData;
   }
 
 }
