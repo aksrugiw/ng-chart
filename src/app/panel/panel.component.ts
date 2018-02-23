@@ -21,14 +21,19 @@ export class PanelComponent implements OnInit {
   isDetails = false;
   detailsInfo = '';
   sortKey = '';
-  sortAsc = true;
+  sortAsc = false;
+  isLoading = true;
+  iconSort = {
+    name: 'fa-sort',
+    value: 'fa-sort',
+    pvalue: 'fa-sort'
+  };
 
   constructor(private _dataService: DataService) {}
 
   ngOnInit() {
      this.fetchDataFromServer();
-     this.tableData = this.responseData;
-     this.prepareData(this.responseData);
+     this.prepareData();
      this.drawChart();
   }
 
@@ -36,20 +41,21 @@ export class PanelComponent implements OnInit {
     this._dataService.fetchMockData()
     .subscribe(response => {
       this.responseData = Object.keys(response).map((k) => response[k]);
+      this.tableData = this.responseData;
+      this.isLoading = false;
     });  
   }
 
   reloadData() {
     this.fetchDataFromServer();
-    this.tableData = this.responseData;
-    this.prepareData(this.responseData);
+    this.prepareData();
     this.drawChart();
   }
 
-  prepareData(data) {
-    for(let i=0; i<data.length; i++) {
-      this.data.values.push(data[i].value);
-      this.data.names.push(data[i].name);
+  prepareData() {
+    for(let i=0; i<this.responseData.length; i++) {
+      this.data.values.push(this.responseData[i].value);
+      this.data.names.push(this.responseData[i].name);
     }
   }
 
@@ -96,6 +102,7 @@ export class PanelComponent implements OnInit {
             this.detailsInfo = this.chart.data.labels[activePoints[0]._index];
             this.tableData = this.responseData[activePoints[0]._index].data;
             this.isDetails = true;
+            this.sortReset();
             }
           }
     });
@@ -104,11 +111,24 @@ export class PanelComponent implements OnInit {
   backFromDetails() {
     this.isDetails = false;
     this.tableData = this.responseData;
+    this.sortReset();
   }
 
   sortTable(sortBy) {
+    this.sortReset();
     this.sortKey = sortBy;
     this.sortAsc = !this.sortAsc;
+    
+    this.iconSort[sortBy] = this.sortAsc ? 'fa-sort-up' : 'fa-sort-down';
+  }
+
+  sortReset() {
+    this.iconSort = {
+      name: 'fa-sort',
+      value: 'fa-sort',
+      pvalue: 'fa-sort'
+    };
+    this.sortKey = '';
   }
 
 }

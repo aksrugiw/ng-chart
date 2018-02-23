@@ -10,9 +10,9 @@
         <table class="table">
           <thead>
             <tr>
-              <th (click)="sortTable('name')">name</th>
-              <th (click)="sortTable('value')">value</th>
-              <th (click)="sortTable('pvalue')">pvalue</th>
+              <th (click)="sortTable('name')">name <i class="fa fa-fw" [ngClass]="iconSort.name"></i></th>
+              <th (click)="sortTable('value')">value <i class="fa fa-fw" [ngClass]="iconSort.value"></i></th>
+              <th (click)="sortTable('pvalue')">pvalue <i class="fa fa-fw" [ngClass]="iconSort.pvalue"></i></th>
             </tr>
           </thead>
           <tbody>
