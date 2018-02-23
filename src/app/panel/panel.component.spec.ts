@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PanelComponent } from './panel.component';
+import { Chart } from 'chart.js';
+import { OrderByPipe } from '.././order-by.pipe';
 
 describe('PanelComponent', () => {
   let component: PanelComponent;
@@ -8,7 +10,12 @@ describe('PanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PanelComponent ]
+      imports: [],
+      declarations: [ 
+        PanelComponent,
+        OrderByPipe,
+        Chart
+       ]
     })
     .compileComponents();
   }));
@@ -22,4 +29,5 @@ describe('PanelComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
 });
