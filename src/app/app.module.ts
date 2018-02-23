@@ -4,11 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { DataService } from './data.service';
+import { PanelComponent } from './panel/panel.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PanelComponent
   ],
   imports: [
     BrowserModule,

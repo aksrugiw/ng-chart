@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { DataService } from './data.service';
+
+import { PanelComponent } from './panel/panel.component';
+
 
 @Component({
   selector: 'app-root',
@@ -7,13 +9,5 @@ import { DataService } from './data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  constructor(private _dataService: DataService) {}
-
-  ngOnInit() {
-    this._dataService.fetchData()
-      .subscribe(response => {
-        console.log(response);
-      })
-  }
+  
 }
