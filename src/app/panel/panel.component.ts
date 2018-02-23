@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from './../data.service';
 import { Chart } from 'chart.js';
 
@@ -8,6 +8,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./panel.component.css']
 })
 export class PanelComponent implements OnInit {
+  @Input() canvasId: string;
   chart;
   responseData = [];
   tableData = [];
@@ -70,7 +71,7 @@ export class PanelComponent implements OnInit {
       ],
       labels: this.data.names
     };
-    this.chart = new Chart('canvas', {
+    this.chart = new Chart(this.canvasId, {
         type: 'doughnut',
         data: preparedData,
         options: {
