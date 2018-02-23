@@ -1,5 +1,10 @@
 <div class="container">
-    <div class="row" *ngIf="!isLoading">
+    <div class="row" *ngIf="isError">
+        <div class="alert alert-danger" role="alert">
+          Something went wrong, data couldn't be loaded.
+        </div>
+    </div>
+    <div class="row" *ngIf="!isLoading && !isError">
       <div class="col-sm-6 col-xs-12 text-right">
               <canvas
                   baseChart
@@ -33,7 +38,7 @@
         </table>
       </div>
     </div>
-    <div class="row" *ngIf="isLoading">
+    <div class="row" *ngIf="isLoading && !isError">
       <div class="col-xs-12">
         <p>Loading data...</p>
       </div>

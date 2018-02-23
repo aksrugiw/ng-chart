@@ -23,6 +23,7 @@ export class PanelComponent implements OnInit {
   sortKey = '';
   sortAsc = false;
   isLoading = true;
+  isError = false;
   iconSort = {
     name: 'fa-sort',
     value: 'fa-sort',
@@ -39,16 +40,19 @@ export class PanelComponent implements OnInit {
   }
 
   fetchDataFromServer() {
-    this._dataService.fetchMockData()
+    this._dataService.fetchData()
     .subscribe(response => {
       this.responseData = Object.keys(response).map((k) => response[k]);
       this.tableData = this.responseData;
       this.isLoading = false;
       this.prepareData();
-    });  
+    }, error => {
+      this.isError = true;
+    });
   }
 
   reloadData() {
+    this.isLoading = true;
     this.fetchDataFromServer();
   }
 
