@@ -1,25 +1,34 @@
 <div class="container">
-    <div class="row" *ngIf="isError">
-        <div class="alert alert-danger" role="alert">
-          Something went wrong, data couldn't be loaded.
+  <div class="row">
+    <div class="panel panel-default" *ngIf="isError">
+      <div class="panel-body">
+        <div class="col-xs-12">
+          <div class="alert alert-danger" role="alert">
+            Something went wrong, data couldn't be loaded.
+          </div>
         </div>
-    </div>
-    <div class="row" *ngIf="!isLoading && !isError">
-      <div class="col-sm-6 col-xs-12 text-right">
-              <canvas
-                  baseChart
-                  [chartType]="'doughnut'"
-                  [data]="parsedData.values"
-                  [labels]="parsedData.names"
-                  [options]="chartOptions"
-                  [legend]="true"
-                  (chartClick)="onChartClick($event)">
-              </canvas>
-        <button class="btn btn-primary" (click)="reloadData()">Reload data</button>
       </div>
+    </div>
+    
+    <div class="panel panel-default" *ngIf="!isLoading && !isError">
+      <div class="panel-body">
+        <div class="col-sm-6 col-xs-12 text-right">
+          <canvas
+            baseChart
+            [chartType]="'doughnut'"
+            [data]="parsedData.values"
+            [labels]="parsedData.names"
+            [options]="chartOptions"
+            [legend]="true"
+            (chartClick)="onChartClick($event)">
+          </canvas>
+          <button class="btn btn-primary" (click)="reloadData()">Reload data</button>
+    </div>
       <div class="col-sm-6 col-xs-12">
-        <p *ngIf="isDetails">Details from: {{ detailsInfo }}</p>
-        <button class="btn btn-sm btn-info" *ngIf="isDetails" (click)="backFromDetails()">back</button>
+        <p *ngIf="isDetails">
+          Details from: {{ detailsInfo }}
+          <button class="btn btn-sm btn-info" *ngIf="isDetails" (click)="backFromDetails()">back</button>
+        </p>
         <table class="table">
           <thead>
             <tr>
@@ -38,9 +47,14 @@
         </table>
       </div>
     </div>
-    <div class="row" *ngIf="isLoading && !isError">
-      <div class="col-xs-12">
-        <p>Loading data...</p>
+
+    <div class="panel panel-default"  *ngIf="isLoading && !isError">
+        <div class="panel-body">
+          <div class="col-xs-12">
+              <p>Loading data...</p>
+          </div>
+        </div>
       </div>
-    </div>
   </div>
+  </div>
+</div>
