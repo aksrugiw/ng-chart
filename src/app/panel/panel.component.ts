@@ -42,7 +42,7 @@ export class PanelComponent implements OnInit {
   fetchDataFromServer() {
     this._dataService.fetchMockData()
     .subscribe(response => {
-      this.responseData = Object.keys(response).map((k) => response[k]);
+      this.responseData = response;
       this.tableData = this.responseData;
       this.isLoading = false;
       this.prepareData();

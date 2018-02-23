@@ -20,7 +20,7 @@ export class DataService {
     };
 
     return this._http.get(this.url, httpOptions)
-      .map(result => result);
+      .map(result => Object.keys(result).map((k) => result[k]));
   }
 
   fetchMockData() {
