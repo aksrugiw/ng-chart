@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
 
 @Injectable()
 export class DataService {
@@ -35,10 +37,7 @@ export class DataService {
       {"id":"fa87ddb3-8a41-4772-ad7f-3dc549e9975b","name":"Skaboo","value":33753.85,"pvalue":0.004602064144832408583125647,"data":[{"id":1,"name":"China","value":252214.44,"pvalue":0.003777871309328542884417106},{"id":2,"name":"China","value":510187.56,"pvalue":0.003704476715644268523252683},{"id":3,"name":"Philippines","value":728460.12,"pvalue":0.00379636432836283051196058},{"id":4,"name":"China","value":516559.35,"pvalue":0.003830955653817625585905463},{"id":5,"name":"United States","value":428642.83,"pvalue":0.003680269106924808648084063},{"id":6,"name":"China","value":509112.18,"pvalue":0.005127602614158959776213224},{"id":7,"name":"Cuba","value":118342.38,"pvalue":0.008580331867755004116334863}]}
     ];
 
-    return Observable.create( observer => {
-      observer.next(data);
-      observer.complete();
-    });
+    return Observable.of(data).delay(1000);
   }
 
 }

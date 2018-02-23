@@ -10,11 +10,11 @@ import { OrderByPipe } from './../order-by.pipe';
   styleUrls: ['./panel.component.css']
 })
 export class PanelComponent implements OnInit {
-  @Input() canvasId: string = 'canvas';
+  @Input() data;
   chart: Chart;
   responseData = [];
   tableData = [];
-  data = {
+  parsedData = {
     values: [],
     names: []
   };
@@ -28,13 +28,14 @@ export class PanelComponent implements OnInit {
     value: 'fa-sort',
     pvalue: 'fa-sort'
   };
+  chartOptions = {
+    responsive: true
+  };
 
   constructor(private _dataService: DataService) {}
 
   ngOnInit() {
-     this.fetchDataFromServer();
-     this.prepareData();
-     this.drawChart();
+    this.fetchDataFromServer();
   }
 
   fetchDataFromServer() {
@@ -43,69 +44,32 @@ export class PanelComponent implements OnInit {
       this.responseData = Object.keys(response).map((k) => response[k]);
       this.tableData = this.responseData;
       this.isLoading = false;
+      this.prepareData();
     });  
   }
 
   reloadData() {
     this.fetchDataFromServer();
-    this.prepareData();
-    this.drawChart();
   }
 
   prepareData() {
+    let tempData = {
+      values: [],
+      names: []
+    };
     for(let i=0; i<this.responseData.length; i++) {
-      this.data.values.push(this.responseData[i].value);
-      this.data.names.push(this.responseData[i].name);
+      tempData.values.push(this.responseData[i].value);
+      tempData.names.push(this.responseData[i].name);
     }
+    this.parsedData = tempData;
   }
 
-  drawChart() {
-    let preparedData = {
-      datasets: [
-        { 
-          data: this.data.values,
-          borderColor: [
-            "#6dbcbe", 
-            "#50a5e8", 
-            "#f9cb62",
-            "#6d45be", 
-            "#f34b62",
-            "#20a5e2", 
-            "#f9aa62",
-            "#44cb62",
-            "#f78c62",
-            "#ff03a0",
-          ],
-          backgroundColor: [
-            "#6dbcbe", 
-            "#50a5e8", 
-            "#f9cb62",
-            "#6d45be", 
-            "#f34b62",
-            "#20a5e2", 
-            "#f9aa62",
-            "#44cb62",
-            "#f78c62",
-            "#ff03a0",
-          ],
-        }
-      ],
-      labels: this.data.names
-    };
-    let ctx = document.getElementById(this.canvasId);
-    this.chart = new Chart(ctx, {
-        type: 'doughnut',
-        data: preparedData,
-        options: {
-          onClick: (e) => {
-            var activePoints = this.chart.getElementsAtEvent(e);
-            this.detailsInfo = this.chart.data.labels[activePoints[0]._index];
-            this.tableData = this.responseData[activePoints[0]._index].data;
-            this.isDetails = true;
-            this.sortReset();
-            }
-          }
-    });
+  onChartClick(e) {
+    let activePoints = e.active;
+    this.detailsInfo = this.parsedData.names[activePoints[0]._index];
+    this.tableData = this.responseData[activePoints[0]._index].data;
+    this.isDetails = true;
+    this.sortReset();
   }
 
   backFromDetails() {

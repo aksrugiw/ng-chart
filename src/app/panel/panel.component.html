@@ -1,7 +1,15 @@
 <div class="container">
-    <div class="row">
-      <div class="col-sm-6 col-xs-12">
-        <canvas id="{{ canvasId }}">{{ chart }}</canvas>
+    <div class="row" *ngIf="!isLoading">
+      <div class="col-sm-6 col-xs-12 text-right">
+              <canvas
+                  baseChart
+                  [chartType]="'doughnut'"
+                  [data]="parsedData.values"
+                  [labels]="parsedData.names"
+                  [options]="chartOptions"
+                  [legend]="true"
+                  (chartClick)="onChartClick($event)">
+              </canvas>
         <button class="btn btn-primary" (click)="reloadData()">Reload data</button>
       </div>
       <div class="col-sm-6 col-xs-12">
@@ -23,6 +31,11 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+    <div class="row" *ngIf="isLoading">
+      <div class="col-xs-12">
+        <p>Loading data...</p>
       </div>
     </div>
   </div>
