@@ -5,8 +5,10 @@ import { PanelComponent } from './panel/panel.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+            <app-panel ></app-panel>
+            <app-panel ></app-panel>
+            `
 })
 export class AppComponent {
   

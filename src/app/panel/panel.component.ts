@@ -1,17 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from './../data.service';
-import { Chart } from 'chart.js';
 
 import { OrderByPipe } from './../order-by.pipe';
 
 @Component({
   selector: 'app-panel',
-  templateUrl: './panel.component.html',
-  styleUrls: ['./panel.component.css']
+  templateUrl: './panel.component.html'
 })
 export class PanelComponent implements OnInit {
-  @Input() data;
-  chart: Chart;
   responseData = [];
   tableData = [];
   parsedData = {
@@ -57,15 +53,10 @@ export class PanelComponent implements OnInit {
   }
 
   prepareData() {
-    let tempData = {
-      values: [],
-      names: []
-    };
     for(let i=0; i<this.responseData.length; i++) {
-      tempData.values.push(this.responseData[i].value);
-      tempData.names.push(this.responseData[i].name);
+      this.parsedData.values.push(this.responseData[i].value);
+      this.parsedData.names.push(this.responseData[i].name);
     }
-    this.parsedData = tempData;
   }
 
   onChartClick(e) {
