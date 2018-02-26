@@ -1,8 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { PanelComponent } from './panel.component';
-import { Chart } from 'chart.js';
 import { OrderByPipe } from '.././order-by.pipe';
+import { ChartsModule } from 'ng4-charts/ng4-charts';
+import { DataService } from '.././data.service';
 
 describe('PanelComponent', () => {
   let component: PanelComponent;
@@ -10,12 +12,12 @@ describe('PanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [],
+      imports: [ChartsModule, HttpClientModule],
       declarations: [ 
         PanelComponent,
-        OrderByPipe,
-        Chart
-       ]
+        OrderByPipe
+       ],
+      providers: [DataService],
     })
     .compileComponents();
   }));
