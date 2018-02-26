@@ -15,7 +15,8 @@ export class DataService {
   fetchData() {
     const httpOptions = {
       headers: new HttpHeaders({
-        'X-API-Key': this.apiKey
+        'X-API-Key': this.apiKey,
+        'Cache-Control': 'max-age=3000'
       })
     };
 
